@@ -1,0 +1,13 @@
+@startuml
+participant AgentSidecar
+participant AlloyCollector
+participant MQTTBroker
+participant Loki
+participant Prometheus
+
+AgentSidecar -> AlloyCollector : structured logs, metrics
+AgentSidecar -> MQTTBroker : event telemetry
+AlloyCollector -> Loki : enriched logs
+AlloyCollector -> Prometheus : scrape/export metrics
+MQTTBroker -> TestDriver : feedback, status
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+actor Operator
+participant TestDriver
+participant ScenarioManager
+participant AgentSidecar
+participant DBPod
+
+Operator -> TestDriver : launch scenario
+TestDriver -> ScenarioManager : load + expand
+TestDriver -> AgentSidecar : deploy DB (via SSH/API)
+TestDriver -> AgentSidecar : inject fault (tc / restart)
+TestDriver -> AgentSidecar : start load tool
+AgentSidecar -> DBPod : generate load
+TestDriver -> AgentSidecar : shutdown + archive
+@enduml

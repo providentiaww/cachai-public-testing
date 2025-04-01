@@ -1,0 +1,32 @@
+@startuml
+package "Test Harness" {
+  [TestDriver]
+  [ScenarioManager]
+  [LoadController]
+  [FaultInjector]
+  [TelemetryPublisher]
+}
+
+package "MQTT Broker" {
+  [Mosquitto]
+}
+
+package "Grafana Alloy Node (on SUT)" {
+  [Alloy Collector]
+  [Loki Sink]
+  [Prometheus Sink]
+  [MQTT Sink]
+}
+
+package "SUT Node" {
+  [MicroK8s Runtime]
+  [DB Pod]
+  [Agent Sidecar]
+}
+
+[TestDriver] --> [Mosquitto] : control messages
+[TelemetryPublisher] --> [Alloy Collector] : logs/metrics
+[Agent Sidecar] --> [MQTT Sink]
+[Alloy Collector] --> [Loki Sink]
+[Alloy Collector] --> [Prometheus Sink]
+@enduml

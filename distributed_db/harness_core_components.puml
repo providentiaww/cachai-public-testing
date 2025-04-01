@@ -1,0 +1,34 @@
+@startuml
+class TestDriver {
+  +executeScenario()
+  +collectResults()
+  +publishTelemetry()
+}
+
+class ScenarioManager {
+  +loadScenarioFile()
+  +resolveVariables()
+  +generateTestPlan()
+}
+
+class LoadController {
+  +invokeTool(toolName, config)
+  +monitorWorkload()
+}
+
+class FaultInjector {
+  +applyNetworkPartition()
+  +restartNode()
+  +degradeLink()
+}
+
+class TelemetryPublisher {
+  +sendToMQTT(event)
+  +pushToAlloy(metrics)
+}
+
+TestDriver --> ScenarioManager
+TestDriver --> LoadController
+TestDriver --> FaultInjector
+TestDriver --> TelemetryPublisher
+@enduml
